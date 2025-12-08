@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 # Инициализация OpenAI API
-openai.api_key = "<YOUR_OPENAI_API_KEY>"
+openai.api_key = "<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>"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
