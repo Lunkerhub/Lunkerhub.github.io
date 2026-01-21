@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Александр Блок | Полное Собрание Историй</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --mandarin: #ff8c00;
+            --deep-black: #000000;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            /* Растянутый вертикальный градиент */
+            background: linear-gradient(180deg, #ffb347 0%, #ff8c00 15%, #e67e22 40%, #2c3e50 70%, #000000 100%);
+            background-attachment: fixed;
+            color: #000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #canvas-trail {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        header {
+            text-align: center;
+            padding: clamp(40px, 10vh, 80px) 20px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 7vw, 4.5rem);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .chapter {
+            display: none;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: clamp(20px, 6vw, 50px);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            animation: pageIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .chapter.active { display: block; }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 5vw, 2.3rem);
+            margin-bottom: 20px;
+            color: #000;
+            border-bottom: 4px solid var(--mandarin);
+            display: inline-block;
+        }
+
+        p {
+            font-size: clamp(1rem, 4vw, 1.15rem);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: rgba(255, 140, 0, 0.1);
+            border-left: 6px solid var(--mandarin);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+            font-style: italic;
+        }
+
+        /* Навигация */
+        .nav-ui {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px 25px;
+            border-radius: 100px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: max-content;
+        }
+
+        .btn {
+            background: var(--mandarin);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover:not(:disabled) { transform: scale(1.1); background: #ffaa00; }
+        .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .page-counter {
+            color: white;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .nav-ui { width: 90%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas-trail"></canvas>
+
+<header>
+    <h1>Александр Блок</h1>
+    <p style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Литературное путешествие</p>
+</header>
+
+<div class="container">
+    
+    <!-- ГЛАВА 1 -->
+    <div id="c1" class="chapter active">
+        <h2>Глава 1: Истоки</h2>
+        <p>Александр родился в 1880 году в Санкт-Петербурге. Его семья была «цветом» русской интеллигенции. Дед — Андрей Бекетов, великий ботаник и ректор университета.</p>
+        <div class="highlight-box">
+            «С раннего детства я помню запах старых книг и огромный сад в Шахматово. Это были мои первые учителя...»
+        </div>
+        <p>В Шахматово он впитал любовь к классической поэзии и научился слушать тишину, из которой позже рождались ритмы.</p>
+    </div>
+
+    <!-- ГЛАВА 2 -->
+    <div id="c2" class="chapter">
+        <h2>Глава 2: Как рождались стихи</h2>
+        <p>Для Блока поэзия была не работой, а <b>«слушанием музыки»</b>. Он обладал уникальным даром слышать исторический и космический гул.</p>
+        <div class="highlight-box">
+            <b>Метод:</b> Блок часто записывал ритм или отдельное слово, которое «жужжало» у него в голове, а уже потом выстраивал вокруг него всё стихотворение.
+        </div>
+        <p>Он писал в состоянии транса. Когда стихи приходили, он мог не спать сутками, фиксируя «звуки», которые, по его мнению, диктовал сам космос.</p>
+    </div>
+
+    <!-- ГЛАВА 3 -->
+    <div id="c3" class="chapter">
+        <h2>Глава 3: Стихи о Даме</h2>
+        <p>Первый период творчества — мистический. Блок влюблен в Любовь Менделееву и видит в ней не просто человека, а божественную Тень.</p>
+        <p>Его сборник «Стихи о Прекрасной Даме» стал манифестом символизма. Каждое слово в нем — символ, намек на высшую реальность.</p>
+    </div>
+
+    <!-- ГЛАВА 4 -->
+    <div id="c4" class="chapter">
+        <h2>Глава 4: В плену города</h2>
+        <p>Блок выходит из усадебного рая в холодный Петербург. Мистика сменяется иронией и горечью. Появляются образы ресторанов, дыма и падения.</p>
+        <div class="highlight-box">
+            «И каждый вечер, в час назначенный...» — так рождалась «Незнакомка», символ утраченного идеала в грязном мире.
+        </div>
+    </div>
+
+    <!-- ГЛАВА 5 -->
+    <div id="c5" class="chapter">
+        <h2>Глава 5: Родина-Жена</h2>
+        <p>Центральная тема — Россия. Блок видел в ней не спокойную мать, а мятежную жену. Он предсказал её великие потрясения еще задолго до революции.</p>
+        <p>Цикл «На поле Куликовом» — это пророчество о том, что покой России «только снится» среди вечного боя.</p>
+    </div>
+
+    <!-- ГЛАВА 6 -->
+    <div id="c6" class="chapter">
+        <h2>Глава 6: Смерть музыки</h2>
+        <p>В 1918 году Блок написал «Двенадцать» — поэму-вихрь. После неё он замолчал. Он говорил, что «все звуки прекратились».</p>
+        <div class="highlight-box">
+            Блок перестал писать, потому что перестал <b>слышать</b>. Для него жизнь без внутренней музыки была физически невозможна.
+        </div>
+    </div>
+
+    <!-- ГЛАВА 7 -->
+    <div id="c7" class="chapter">
+        <h2>Глава 7: Бессмертие</h2>
+        <p>В августе 1921 года поэт скончался. Последними его словами были просьбы сжечь экземпляры последней поэмы.</p>
+        <p>Сегодня Блок остается самым читаемым поэтом Серебряного века. Его ритмы и образы живут в песнях, фильмах и наших мыслях.</p>
+        <div class="highlight-box" style="text-align: center;">
+            «Сотри случайные черты — и ты увидишь: мир прекрасен.»
+        </div>
+    </div>
+
+</div>
+
+<!-- Навигационная панель -->
+<div class="nav-ui">
+    <button id="pBtn" class="btn" onclick="go(-1)" disabled>Назад</button>
+    <div class="page-counter" id="pgNum">1 / 7</div>
+    <button id="nBtn" class="btn" onclick="go(1)">Далее</button>
+</div>
+
+<script>
+    let cur = 1;
+    const total = 7;
+
+    function go(d) {
+        document.getElementById(`c${cur}`).classList.remove('active');
+        cur += d;
+        document.getElementById(`c${cur}`).classList.add('active');
+        
+        document.getElementById('pgNum').innerText = `${cur} / ${total}`;
+        document.getElementById('pBtn').disabled = (cur === 1);
+        document.getElementById('nBtn').disabled = (cur === total);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Радужная линия
+    const canvas = document.getElementById('canvas-trail');
+    const ctx = canvas.getContext('2d');
+    let pts = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let mouse = { x: -100, y: -100 };
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('touchmove', e => { 
+        mouse.x = e.touches[0].clientX; 
+        mouse.y = e.touches[0].clientY; 
+    });
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pts.push({ ...mouse });
+        if (pts.length > 25) pts.shift();
+
+        if (pts.length > 1) {
+            for (let i = 1; i < pts.length; i++) {
+                const pct = i / pts.length;
+                ctx.beginPath();
+                ctx.strokeStyle = `hsla(${Date.now()/8 + i*12}, 100%, 55%, ${pct})`;
+                ctx.lineWidth = pct * 12;
+                ctx.lineCap = 'round';
+                ctx.moveTo(pts[i-1].x, pts[i-1].y);
+                ctx.lineTo(pts[i].x, pts[i].y);
+                ctx.stroke();
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+</script>
+
+</body>
+</html>
