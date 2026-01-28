@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Символы России</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            /* Градиент: черный верх, белый низ */
+            background: linear-gradient(to bottom, #000000 15%, #ffffff 100%);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Огромный блок контента */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            z-index: 10;
+        }
+
+        .image-container {
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .symbol-img {
+            max-height: 100%;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+            transition: 0.5s;
+        }
+
+        h1 {
+            font-size: 5em;
+            margin: 10px 0;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+        }
+
+        p#description {
+            font-size: 2.2em;
+            color: #fff;
+            text-align: center;
+            max-width: 900px;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 20px;
+            line-height: 1.2;
+        }
+
+        /* Кнопки в самом низу */
+        .footer {
+            padding-bottom: 60px;
+            z-index: 20;
+            text-align: center;
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 50px;
+        }
+
+        button {
+            padding: 20px 60px;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            border: 4px solid #000;
+            background: #000;
+            color: #fff;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: transparent;
+            color: #000;
+        }
+
+        .counter {
+            margin-top: 15px;
+            font-size: 1.5em;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Снег */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: #fff;
+            z-index: 1;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <div class="image-container">
+            <img id="symbol-image" class="symbol-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Rt79tWLcWpc_eisqDcA3QRy9Lrb58ZeI9rREBqFlUg&s" alt="Символ">
+        </div>
+        <h1 id="title">Матрешка</h1>
+        <p id="description">Главный сувенир страны, символизирующий преемственность поколений и русскую душу.</p>
+    </div>
+
+    <div class="footer">
+        <div class="nav-btns">
+            <button onclick="changePage(-1)">НАЗАД</button>
+            <button onclick="changePage(1)">ВПЕРЕД</button>
+        </div>
+        <div class="counter">Страница <span id="page-num">1</span> / 10</div>
+    </div>
+
+    <script>
+        const pages = [
+            { 
+                name: "Матрешка", 
+                desc: "Главный сувенир страны, символизирующий преемственность поколений и русскую душу.", 
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Rt79tWLcWpc_eisqDcA3QRy9Lrb58ZeI9rREBqFlUg&s" 
+            },
+            { 
+                name: "Балалайка", 
+                desc: "Трехструнный музыкальный инструмент, ставший узнаваемым голосом России.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Ложки", 
+                desc: "Деревянные ложки — это не только посуда, но и самый древний ударный инструмент.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Гжель", 
+                desc: "Уникальная синяя роспись на белом фарфоре, прославившая подмосковных мастеров.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Хохлома", 
+                desc: "Яркая роспись золотом по черному фону с красными ягодами и листьями.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Самовар", 
+                desc: "Старинный прибор для кипячения воды, символ тепла и домашнего уюта.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Валенки", 
+                desc: "Традиционная русская зимняя обувь из валяной шерсти для самых сильных морозов.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Ушанка", 
+                desc: "Зимняя шапка, ставшая легендарным атрибутом русского стиля во всем мире.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Тройка", 
+                desc: "Особая упряжка лошадей, летящая по снегу с невероятной скоростью.", 
+                img: "https://img.icons8.com" 
+            },
+            { 
+                name: "Медведь", 
+                desc: "Могучий хозяин тайги, воплощающий силу и добродушие русского народа.", 
+                img: "https://img.icons8.com" 
+            }
+        ];
+
+        let currentPage = 0;
+
+        function changePage(dir) {
+            currentPage = (currentPage + dir + pages.length) % pages.length;
+            const img = document.getElementById('symbol-image');
+            
+            img.style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('title').innerText = pages[currentPage].name;
+                document.getElementById('description').innerText = pages[currentPage].desc;
+                img.src = pages[currentPage].img;
+                document.getElementById('page-num').innerText = currentPage + 1;
+                img.style.opacity = 1;
+            }, 300);
+        }
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(snowflake);
+            setTimeout(() => snowflake.remove(), 4000);
+        }
+        setInterval(createSnowflake, 100);
+    </script>
+</body>
+</html>
