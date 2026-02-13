@@ -2,216 +2,213 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Символы России</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Энциклопедия Древнего Мира</title>
     <style>
-        body, html {
+        body {
+            font-family: 'Georgia', serif;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Arial', sans-serif;
-            /* Градиент: черный верх, белый низ */
-            background: linear-gradient(to bottom, #000000 15%, #ffffff 100%);
-            overflow: hidden;
+            min-height: 100vh;
+            color: #2c1e1e;
+            background: linear-gradient(135deg, rgba(30, 15, 0, 0.85), rgba(100, 50, 20, 0.7)), 
+                        url('https://images.unsplash.com');
+            background-attachment: fixed;
+            background-size: cover;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
 
-        /* Огромный блок контента */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 90%;
-            z-index: 10;
-        }
-
-        .image-container {
-            height: 450px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .symbol-img {
-            max-height: 100%;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.2);
-            transition: 0.5s;
-        }
-
-        h1 {
-            font-size: 5em;
-            margin: 10px 0;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
-        }
-
-        p#description {
-            font-size: 2.2em;
-            color: #fff;
+        header {
+            background: rgba(45, 15, 15, 0.95);
+            color: #d4af37;
+            padding: 35px;
             text-align: center;
-            max-width: 900px;
-            background: rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 20px;
-            line-height: 1.2;
+            border-bottom: 4px solid #d4af37;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
-        /* Кнопки в самом низу */
-        .footer {
-            padding-bottom: 60px;
-            z-index: 20;
+        .page-counter {
             text-align: center;
+            color: #f4e4bc;
+            margin: 20px 0;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 5px black;
         }
 
-        .nav-btns {
-            display: flex;
-            gap: 50px;
-        }
-
-        button {
-            padding: 20px 60px;
-            font-size: 1.8em;
-            font-weight: bold;
-            cursor: pointer;
-            border: 4px solid #000;
-            background: #000;
-            color: #fff;
+        .container {
+            max-width: 850px;
+            margin: 0 auto 40px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
             border-radius: 15px;
-            transition: 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            min-height: 600px;
+            flex-grow: 1;
         }
 
-        button:hover {
-            background: transparent;
-            color: #000;
+        .page { display: none; animation: fadeIn 0.8s ease forwards; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .counter {
-            margin-top: 15px;
-            font-size: 1.5em;
-            color: #000;
+        h2 { color: #800000; border-bottom: 2px solid #d4af37; padding-bottom: 10px; text-align: center; }
+
+        .img-container { text-align: center; }
+        img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 4px solid #d4af37;
+        }
+
+        .tool-info {
+            background: #fdf5e6;
+            border-left: 5px solid #800000;
+            padding: 15px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-bottom: 50px;
+        }
+
+        .btn {
+            background: #800000;
+            color: #f4e4bc;
+            border: 2px solid #d4af37;
+            padding: 15px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
             font-weight: bold;
+            transition: 0.4s;
         }
 
-        /* Снег */
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            color: #fff;
-            z-index: 1;
-            pointer-events: none;
-            animation: fall linear infinite;
-        }
+        .btn:hover:not(:disabled) { background: #d4af37; color: #2c1e1e; transform: scale(1.05); }
+        .btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-        @keyframes fall {
-            to { transform: translateY(105vh); }
-        }
+        p { line-height: 1.6; font-size: 1.1em; text-indent: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="main-content">
-        <div class="image-container">
-            <img id="symbol-image" class="symbol-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Rt79tWLcWpc_eisqDcA3QRy9Lrb58ZeI9rREBqFlUg&s" alt="Символ">
-        </div>
-        <h1 id="title">Матрешка</h1>
-        <p id="description">Главный сувенир страны, символизирующий преемственность поколений и русскую душу.</p>
+<header>
+    <h1>НАСЛЕДИЕ ДРЕВНЕГО МИРА</h1>
+</header>
+
+<div class="page-counter">Страница <span id="pageNum">1</span> из 10</div>
+
+<div class="container">
+    <!-- Страница 1 -->
+    <div class="page active" id="p1">
+        <h2>1. Форум Romanum</h2>
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepTu3cxaTIWEIWOTMKvoKQhoiRmSJnSG6wusxQ1cj0vy2Av2NQw1goQV_2k-xU4DSNb3oDJbD9A5g0Jmq2YXJSZbVHY1AwgvhB6btrSo8x0lUpC7fw3Bn5oYE1z8t_Pgly8gr-U=s715-w715-h572-n-k-no" alt="Римский форум">
+        <p>Римский Форум был сердцем общественной жизни Древнего Рима. Здесь располагались храмы, базилики и правительственные здания. Это был центр политики, религии и торговли всей империи.</p>
+        <div class="tool-info"><b>Объект:</b> Римский Форум. <b>Дата:</b> Основан в VII веке до н.э.</div>
     </div>
 
-    <div class="footer">
-        <div class="nav-btns">
-            <button onclick="changePage(-1)">НАЗАД</button>
-            <button onclick="changePage(1)">ВПЕРЕД</button>
-        </div>
-        <div class="counter">Страница <span id="page-num">1</span> / 10</div>
+    <!-- Страница 2 -->
+    <div class="page" id="p2">
+        <h2>2. Театр в Эпидавре</h2>
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerKrP6VGBRO7gfN2lHobkFaov5P6wU7yafDb0OfcpxlYq_HxQ5BXtT1eiuTGVpkmATrr0OfSaLFnguUVsvdg83C1kwsExrpWRre5_dmqguOoRna_mlo9203n4c8gIjTGldqb7pU183UKuaV=s715-w715-h572-n-k-no" alt="Греческий театр">
+        <p>Древнегреческий театр в Эпидавре знаменит своей феноменальной акустикой. Зрители на самых верхних рядах могли отчетливо слышать шепот со сцены без всяких усилителей звука.</p>
+        <div class="tool-info"><b>Объект:</b> Античный театр. <b>Дата:</b> IV век до н.э.</div>
     </div>
 
-    <script>
-        const pages = [
-            { 
-                name: "Матрешка", 
-                desc: "Главный сувенир страны, символизирующий преемственность поколений и русскую душу.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Rt79tWLcWpc_eisqDcA3QRy9Lrb58ZeI9rREBqFlUg&s" 
-            },
-            { 
-                name: "Балалайка", 
-                desc: "Трехструнный музыкальный инструмент, ставший узнаваемым голосом России.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrapE-qhgeH4CDPUP_-dtks40Uk0xqX-uGWg&s" 
-            },
-            { 
-                name: "Ложки", 
-                desc: "Деревянные ложки — это не только посуда, но и самый древний ударный инструмент.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS70YHYCdITX_LOPIbueEKAVWJ258b1BIyiWQpHOuNJUVkaUlqP52XfsgkynQlALhX7QQI-Dc4-YfZCuyi-B1loGKAeBY3murYcAHBOBkv8&s=10" 
-            },
-            { 
-                name: "Гжель", 
-                desc: "Уникальная синяя роспись на белом фарфоре, прославившая подмосковных мастеров.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK7l3YgmwhMJDVB9kuqviux6CzLgk-dRqmEbhQUvKTOQ&s" 
-            },
-            { 
-                name: "Хохлома", 
-                desc: "Яркая роспись золотом по черному фону с красными ягодами и листьями.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT98XY438aAiz7qvfNaNo9o2luN5QB0MCb60Xx62ECS9615SYijBSlwFq0&s" 
-            },
-            {
-                name: "Самовар", 
-                desc: "Старинный прибор для кипячения воды, символ тепла и домашнего уюта.", 
-                img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQP1EG62XtP3Z4qsfe6h7LKsmORHohsSClOf_qED23QJ0wPnBv8" 
-            },
-            { 
-                name: "Валенки", 
-                desc: "Традиционная русская зимняя обувь из валяной шерсти для самых сильных морозов.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKnFF0VdALpWSWI-wx47FVepTI2Wszl6uoyjOFu0ZkHSyk_jZyNE_ihY9QQn27v8HV-Axg0lCSRcU4xNifX0N-HsJfsU5KcmnMBemwcFetJA&s=10" 
-            },
-            { 
-                name: "Ушанка", 
-                desc: "Зимняя шапка, ставшая легендарным атрибутом русского стиля во всем мире.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQny66OapEb72JS2r2it9NbVGnv_w88Xn5UETqo6CERjg&s=10" 
-            },
-            { 
-                name: "Тройка", 
-                desc: "Особая упряжка лошадей, летящая по снегу с невероятной скоростью.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wkzeng227uJMDXmbi8BSD_YlzHyWnrmxHeezIhWrFA&s=10" 
-            },
-            { 
-                name: "Медведь", 
-                desc: "Могучий хозяин тайги, воплощающий силу и добродушие русского народа.", 
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMGYNsSq6e0ywZNhsp1YNzSQVReigos1r_9R2mFv3yQELsElduSsTbgdobCkZ0KQaDpH5fyjPtBzHx_mRUWqlfDyHYLByAYWFGK2ByKncgvw&s=10" 
-            }
-        ];
+    <!-- Страница 3 -->
+    <div class="page" id="p3">
+        <h2>3. Александрийская Библиотека</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlQTIs9xuJWvOwxF5WpOFzTaTBbg_qEzdiTk6uXbeySw&s=10" alt="Библиотека">
+        <p>Крупнейшее хранилище знаний древности. Здесь трудились величайшие ученые, такие как Эратосфен, который первым вычислил длину земного экватора.</p>
+        <div class="tool-info"><b>Объект:</b> Великая библиотека. <b>Дата:</b> III век до н.э.</div>
+    </div>
 
-        let currentPage = 0;
+    <!-- Страница 4 -->
+    <div class="page" id="p4">
+        <h2>4. Римские Акведуки</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Wuxrk6U0e8yG2SoSdb2zL-c27FxvmjCzNf815jStWw&s=10" alt="Акведук Пон-дю-Гар">
+        <p>Шедевры инженерной мысли. Акведуки использовали силу гравитации, чтобы доставлять миллионы литров пресной воды в города для бань, фонтанов и бытовых нужд.</p>
+        <div class="tool-info"><b>Инструмент:</b> Хоробат (уровень). <b>Дата:</b> I век н.э. (Пон-дю-Гар).</div>
+    </div>
 
-        function changePage(dir) {
-            currentPage = (currentPage + dir + pages.length) % pages.length;
-            const img = document.getElementById('symbol-image');
-            
-            img.style.opacity = 0;
-            setTimeout(() => {
-                document.getElementById('title').innerText = pages[currentPage].name;
-                document.getElementById('description').innerText = pages[currentPage].desc;
-                img.src = pages[currentPage].img;
-                document.getElementById('page-num').innerText = currentPage + 1;
-                img.style.opacity = 1;
-            }, 300);
-        }
+    <!-- Страница 5 -->
+    <div class="page" id="p5">
+        <h2>5. Небесная Сфера</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AOkzpvCTFeJBCsi5qdT81X8o8mM91qJUY0her4-jZQ&s=10" alt="Астрономия">
+        <p>Древние греки разработали сложнейшие модели небесной сферы. С помощью армиллярных сфер они отслеживали движение планет и звезд задолго до появления телескопов.</p>
+        <div class="tool-info"><b>Инструмент:</b> Армиллярная сфера. <b>Дата:</b> ок. 150 г. до н.э.</div>
+    </div>
 
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '❄';
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
-            snowflake.style.fontSize = Math.random() * 20 + 15 + 'px';
-            document.body.appendChild(snowflake);
-            setTimeout(() => snowflake.remove(), 4000);
-        }
-        setInterval(createSnowflake, 100);
-    </script>
+    <!-- Страница 6 -->
+    <div class="page" id="p6">
+        <h2>6. Аппиева Дорога</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxvGbgg4e9FNoZINyet0C2IWU6s-BLMCkR-JauwozNfQ&s=10" alt="Римская дорога">
+        <p>Римские дороги строились «на века». Они имели многослойное основание из камня и гравия, что обеспечивало невероятную долговечность и скорость перемещения легионов.</p>
+        <div class="tool-info"><b>Объект:</b> Via Appia. <b>Дата:</b> Строительство начато в 312 г. до н.э.</div>
+    </div>
+
+    <!-- Страница 7 -->
+    <div class="page" id="p7">
+        <h2>7. Инструменты Медицины</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTzg7T9jE5Gi9TOBjSTWs3AV8AGyunFeDiXWko5fsJzg&s=10" alt="Медицинские инструменты">
+        <p>Врачи в Древнем Риме и Греции умели проводить сложнейшие операции. Инструменты изготавливались из бронзы и стали, отличаясь поразительной схожестью с современными аналогами.</p>
+        <div class="tool-info"><b>Инструмент:</b> Хирургический набор. <b>Дата:</b> I-II вв. н.э.</div>
+    </div>
+
+    <!-- Страница 8 -->
+    <div class="page" id="p8">
+        <h2>8. Великие Пирамиды</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqMkYrERzUhv5FPmJLuYXVgvvLM54el9Xk08rRuR14g&s=10" alt="Пирамиды Гизы">
+        <p>Чудо инженерной мысли Египта. Точность подгонки многотонных блоков до сих пор вызывает восхищение и споры среди современных строителей.</p>
+        <div class="tool-info"><b>Объект:</b> Пирамида Хеопса. <b>Дата:</b> ок. 2560 г. до н.э.</div>
+    </div>
+
+    <!-- Страница 9 -->
+    <div class="page" id="p9">
+        <h2>9. Колизей (Амфитеатр Флавиев)</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVGdZR9qWF7I6EwSXs-RS6rcBKZTs-cD_jsCRoRyvkPQ&s=10" alt="Колизей">
+        <p>Символ могущества Рима. Огромная арена вмещала до 50 тысяч зрителей и имела сложную систему подземных лифтов для выпуска зверей и гладиаторов.</p>
+        <div class="tool-info"><b>Объект:</b> Колизей. <b>Дата:</b> 80 г. н.э.</div>
+    </div>
+
+    <!-- Страница 10 -->
+    <div class="page" id="p10">
+        <h2>10. Парфенон в Афинах</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoKkzDYPE51INPvPNFU3QGSOvZP8J2frAjZrMDUIQ2EA&s=10" alt="Парфенон">
+        <p>Вершина классической архитектуры. В его конструкции использовались оптические искажения, чтобы с любого расстояния храм казался идеально симметричным.</p>
+        <div class="tool-info"><b>Объект:</b> Храм Парфенон. <b>Дата:</b> 438 г. до н.э.</div>
+    </div>
+</div>
+
+<div class="nav-buttons">
+    <button class="btn" id="prevBtn" onclick="changePage(-1)" disabled>← Назад</button>
+    <button class="btn" id="nextBtn" onclick="changePage(1)">Вперед →</button>
+</div>
+
+<script>
+    let current = 1;
+    const total = 10;
+
+    function changePage(step) {
+        document.getElementById('p' + current).classList.remove('active');
+        current += step;
+        document.getElementById('p' + current).classList.add('active');
+        
+        document.getElementById('pageNum').innerText = current;
+        document.getElementById('prevBtn').disabled = (current === 1);
+        document.getElementById('nextBtn').disabled = (current === total);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
 </body>
 </html>
