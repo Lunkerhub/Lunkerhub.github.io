@@ -3,212 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Энциклопедия Древнего Мира</title>
+    <title>Музыкальные традиции Ирландии</title>
     <style>
+        /* Черно-белый градиент на весь экран */
         body {
-            font-family: 'Georgia', serif;
             margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #434343 100%);
+            color: #ffffff;
             min-height: 100vh;
-            color: #2c1e1e;
-            background: linear-gradient(135deg, rgba(30, 15, 0, 0.85), rgba(100, 50, 20, 0.7)), 
-                        url('https://images.unsplash.com');
-            background-attachment: fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background: rgba(45, 15, 15, 0.95);
-            color: #d4af37;
-            padding: 35px;
-            text-align: center;
-            border-bottom: 4px solid #d4af37;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-        }
-
-        .page-counter {
-            text-align: center;
-            color: #f4e4bc;
-            margin: 20px 0;
-            font-size: 1.3em;
-            text-shadow: 1px 1px 5px black;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 0 auto 40px auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            min-height: 600px;
-            flex-grow: 1;
-        }
-
-        .page { display: none; animation: fadeIn 0.8s ease forwards; }
-        .page.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 { color: #800000; border-bottom: 2px solid #d4af37; padding-bottom: 10px; text-align: center; }
-
-        .img-container { text-align: center; }
-        img {
-            width: 100%;
-            max-height: 450px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 4px solid #d4af37;
-        }
-
-        .tool-info {
-            background: #fdf5e6;
-            border-left: 5px solid #800000;
-            padding: 15px;
-            margin-top: 20px;
-            font-style: italic;
-        }
-
-        .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            padding-bottom: 50px;
+            align-items: center;
+            overflow: hidden; /* Чтобы снег не создавал прокрутку */
         }
 
-        .btn {
-            background: #800000;
-            color: #f4e4bc;
-            border: 2px solid #d4af37;
-            padding: 15px 40px;
+        /* Холст для снега */
+        #snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Основная карточка */
+        .card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Стиль для картинок */
+        .image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Картинка заполняет блок без искажений */
+            transition: transform 0.5s ease;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ccc;
+            height: 100px; /* Фиксированная высота для текста */
+            margin-bottom: 30px;
+        }
+
+        /* Кнопки внизу */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
             border-radius: 30px;
-            cursor: pointer;
-            font-size: 1em;
             font-weight: bold;
-            transition: 0.4s;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        .btn:hover:not(:disabled) { background: #d4af37; color: #2c1e1e; transform: scale(1.05); }
-        .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        button:hover:not(:disabled) {
+            background: #00e5ff; /* Легкий акцент при наведении */
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
 
-        p { line-height: 1.6; font-size: 1.1em; text-indent: 20px; }
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            font-size: 0.8rem;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>НАСЛЕДИЕ ДРЕВНЕГО МИРА</h1>
-</header>
+    <canvas id="snow"></canvas>
 
-<div class="page-counter">Страница <span id="pageNum">1</span> из 10</div>
+    <div class="card">
+        <div class="image-container">
+            <img id="page-img" src="" alt="Музыка Ирландии">
+        </div>
+        <h1 id="title">Загрузка...</h1>
+        <p id="desc"></p>
 
-<div class="container">
-    <!-- Страница 1 -->
-    <div class="page active" id="p1">
-        <h2>1. Форум Romanum</h2>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepTu3cxaTIWEIWOTMKvoKQhoiRmSJnSG6wusxQ1cj0vy2Av2NQw1goQV_2k-xU4DSNb3oDJbD9A5g0Jmq2YXJSZbVHY1AwgvhB6btrSo8x0lUpC7fw3Bn5oYE1z8t_Pgly8gr-U=s715-w715-h572-n-k-no" alt="Римский форум">
-        <p>Римский Форум был сердцем общественной жизни Древнего Рима. Здесь располагались храмы, базилики и правительственные здания. Это был центр политики, религии и торговли всей империи.</p>
-        <div class="tool-info"><b>Объект:</b> Римский Форум. <b>Дата:</b> Основан в VII веке до н.э.</div>
+        <div class="controls">
+            <button id="prevBtn" onclick="move(-1)">Назад</button>
+            <span class="page-info" id="counter">1 / 10</span>
+            <button id="nextBtn" onclick="move(1)">Вперед</button>
+        </div>
     </div>
 
-    <!-- Страница 2 -->
-    <div class="page" id="p2">
-        <h2>2. Театр в Эпидавре</h2>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerKrP6VGBRO7gfN2lHobkFaov5P6wU7yafDb0OfcpxlYq_HxQ5BXtT1eiuTGVpkmATrr0OfSaLFnguUVsvdg83C1kwsExrpWRre5_dmqguOoRna_mlo9203n4c8gIjTGldqb7pU183UKuaV=s715-w715-h572-n-k-no" alt="Греческий театр">
-        <p>Древнегреческий театр в Эпидавре знаменит своей феноменальной акустикой. Зрители на самых верхних рядах могли отчетливо слышать шепот со сцены без всяких усилителей звука.</p>
-        <div class="tool-info"><b>Объект:</b> Античный театр. <b>Дата:</b> IV век до н.э.</div>
-    </div>
+    <script>
+        // Данные: 10 страниц с реальными фото
+        const data = [
+            { t: "Кельтская арфа", d: "Древний символ Ирландии. Звук арфы считается голосом самой ирландской души.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOmksPctgFJGMX7UOihuMjkmW6EkwGhx7hBdAtR7BAWrq8raQR0TNQYBi3OA0v9dU_TlZoJLSSIVhtSvIDDGF_GVYt8WC_PE0PfR5gyBhb&s=10" },
+            { t: "Скрипка (Фиддл)", d: "Быстрые ритмы и виртуозные смычковые движения — основа любого ирландского праздника.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGQ68WnshFQk1OkAQrAOVXXpSd6tAKW9SkZUFzySFj6A&s=10" },
+            { t: "Барабан Бойран", d: "Ритмичное сердце фолк-музыки. Изготавливается из козьей кожи и звучит очень глубоко.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwzN-e4gES3b4IjBHErNQgEMSffb13pAYWXagLOe2piAzzc0fT1HLa_ZrPqtCCwMHMpn3OjtIlHZQtZPnRuHfxoRh--CWTMQcFBAwgg81-CQ&s=10" },
+            { t: "Вистл", d: "Маленькая флейта с пронзительным и чистым звуком, напоминающим пение птиц.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDbMCjlK3uH5PR6LpL5ZsL0V4KBszNA4-R08C_XHC_zj5tK_i1URWBzp04AmVsthmuRHirplgY6QCzbA89xnNXKi72b3pwJIITaaj9DZ32A&s=10" },
+            { t: "Волынка Uilleann", d: "Самая сложная волынка в мире. На ней играют сидя, качая воздух локтем.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPAP1yZglF2n46F7749qOeWbT_OZSTyd_42jFyYpUSLEFp6DUGjJtZXsIvxZEtPCX53rrS07oOO8usg_8Q6bNL3rp4bq4_SgfPMBjhfFbe&s=10" },
+            { t: "Пабные сессии", d: "В Ирландии музыка рождается в пабах, где незнакомые люди играют вместе часами.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9WuJlb4WfnTWvuhN5x3lKcgbm-DEUiDNClrBKm4azGw&s=10" },
+            { t: "Ирландские танцы", d: "Степ-данс требует идеальной неподвижности корпуса и невероятной скорости ног.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSRmBQLD1jfzIwRQxxLGegrmC7HvIpVxrVfuzNd8Ddqg&s=10" },
+            { t: "Шон-нос", d: "Традиционное пение без инструментов. Каждое слово наполнено эмоцией и историей.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQkxCg3nspNxZ1WvfJORkH-vROon5Fra2e93qyr8AU9w&s=10" },
+            { t: "Фестивали Флеэд", d: "Ежегодные музыкальные соревнования, собирающие тысячи музыкантов со всего света.", i: "https://images.unsplash.com" },
+            { t: "Современный фолк", d: "Ирландские мотивы сегодня звучат в рок-обработке, покоряя мировые стадионы.", i: "https://images.unsplash.com" }
+        ];
 
-    <!-- Страница 3 -->
-    <div class="page" id="p3">
-        <h2>3. Александрийская Библиотека</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlQTIs9xuJWvOwxF5WpOFzTaTBbg_qEzdiTk6uXbeySw&s=10" alt="Библиотека">
-        <p>Крупнейшее хранилище знаний древности. Здесь трудились величайшие ученые, такие как Эратосфен, который первым вычислил длину земного экватора.</p>
-        <div class="tool-info"><b>Объект:</b> Великая библиотека. <b>Дата:</b> III век до н.э.</div>
-    </div>
+        let current = 0;
 
-    <!-- Страница 4 -->
-    <div class="page" id="p4">
-        <h2>4. Римские Акведуки</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Wuxrk6U0e8yG2SoSdb2zL-c27FxvmjCzNf815jStWw&s=10" alt="Акведук Пон-дю-Гар">
-        <p>Шедевры инженерной мысли. Акведуки использовали силу гравитации, чтобы доставлять миллионы литров пресной воды в города для бань, фонтанов и бытовых нужд.</p>
-        <div class="tool-info"><b>Инструмент:</b> Хоробат (уровень). <b>Дата:</b> I век н.э. (Пон-дю-Гар).</div>
-    </div>
+        function render() {
+            const item = data[current];
+            document.getElementById('title').innerText = item.t;
+            document.getElementById('desc').innerText = item.d;
+            document.getElementById('page-img').src = item.i;
+            document.getElementById('counter').innerText = `${current + 1} / 10`;
+            
+            document.getElementById('prevBtn').disabled = current === 0;
+            document.getElementById('nextBtn').disabled = current === 9;
+        }
 
-    <!-- Страница 5 -->
-    <div class="page" id="p5">
-        <h2>5. Небесная Сфера</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AOkzpvCTFeJBCsi5qdT81X8o8mM91qJUY0her4-jZQ&s=10" alt="Астрономия">
-        <p>Древние греки разработали сложнейшие модели небесной сферы. С помощью армиллярных сфер они отслеживали движение планет и звезд задолго до появления телескопов.</p>
-        <div class="tool-info"><b>Инструмент:</b> Армиллярная сфера. <b>Дата:</b> ок. 150 г. до н.э.</div>
-    </div>
+        function move(step) {
+            current += step;
+            render();
+        }
 
-    <!-- Страница 6 -->
-    <div class="page" id="p6">
-        <h2>6. Аппиева Дорога</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxvGbgg4e9FNoZINyet0C2IWU6s-BLMCkR-JauwozNfQ&s=10" alt="Римская дорога">
-        <p>Римские дороги строились «на века». Они имели многослойное основание из камня и гравия, что обеспечивало невероятную долговечность и скорость перемещения легионов.</p>
-        <div class="tool-info"><b>Объект:</b> Via Appia. <b>Дата:</b> Строительство начато в 312 г. до н.э.</div>
-    </div>
+        render();
 
-    <!-- Страница 7 -->
-    <div class="page" id="p7">
-        <h2>7. Инструменты Медицины</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTzg7T9jE5Gi9TOBjSTWs3AV8AGyunFeDiXWko5fsJzg&s=10" alt="Медицинские инструменты">
-        <p>Врачи в Древнем Риме и Греции умели проводить сложнейшие операции. Инструменты изготавливались из бронзы и стали, отличаясь поразительной схожестью с современными аналогами.</p>
-        <div class="tool-info"><b>Инструмент:</b> Хирургический набор. <b>Дата:</b> I-II вв. н.э.</div>
-    </div>
+        // Снег на Canvas
+        const canvas = document.getElementById('snow');
+        const ctx = canvas.getContext('2d');
+        let flakes = [];
 
-    <!-- Страница 8 -->
-    <div class="page" id="p8">
-        <h2>8. Великие Пирамиды</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZqMkYrERzUhv5FPmJLuYXVgvvLM54el9Xk08rRuR14g&s=10" alt="Пирамиды Гизы">
-        <p>Чудо инженерной мысли Египта. Точность подгонки многотонных блоков до сих пор вызывает восхищение и споры среди современных строителей.</p>
-        <div class="tool-info"><b>Объект:</b> Пирамида Хеопса. <b>Дата:</b> ок. 2560 г. до н.э.</div>
-    </div>
+        function initSnow() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            flakes = [];
+            for(let i = 0; i < 150; i++) {
+                flakes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 3 + 1,
+                    d: Math.random() * 1
+                });
+            }
+        }
 
-    <!-- Страница 9 -->
-    <div class="page" id="p9">
-        <h2>9. Колизей (Амфитеатр Флавиев)</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVGdZR9qWF7I6EwSXs-RS6rcBKZTs-cD_jsCRoRyvkPQ&s=10" alt="Колизей">
-        <p>Символ могущества Рима. Огромная арена вмещала до 50 тысяч зрителей и имела сложную систему подземных лифтов для выпуска зверей и гладиаторов.</p>
-        <div class="tool-info"><b>Объект:</b> Колизей. <b>Дата:</b> 80 г. н.э.</div>
-    </div>
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.beginPath();
+            for(let f of flakes) {
+                ctx.moveTo(f.x, f.y);
+                ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+                f.y += Math.cos(f.d) + 1 + f.r/2;
+                f.x += Math.sin(f.d) * 2;
+                if(f.y > canvas.height) {
+                    f.y = -10;
+                    f.x = Math.random() * canvas.width;
+                }
+            }
+            ctx.fill();
+            requestAnimationFrame(drawSnow);
+        }
 
-    <!-- Страница 10 -->
-    <div class="page" id="p10">
-        <h2>10. Парфенон в Афинах</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoKkzDYPE51INPvPNFU3QGSOvZP8J2frAjZrMDUIQ2EA&s=10" alt="Парфенон">
-        <p>Вершина классической архитектуры. В его конструкции использовались оптические искажения, чтобы с любого расстояния храм казался идеально симметричным.</p>
-        <div class="tool-info"><b>Объект:</b> Храм Парфенон. <b>Дата:</b> 438 г. до н.э.</div>
-    </div>
-</div>
-
-<div class="nav-buttons">
-    <button class="btn" id="prevBtn" onclick="changePage(-1)" disabled>← Назад</button>
-    <button class="btn" id="nextBtn" onclick="changePage(1)">Вперед →</button>
-</div>
-
-<script>
-    let current = 1;
-    const total = 10;
-
-    function changePage(step) {
-        document.getElementById('p' + current).classList.remove('active');
-        current += step;
-        document.getElementById('p' + current).classList.add('active');
-        
-        document.getElementById('pageNum').innerText = current;
-        document.getElementById('prevBtn').disabled = (current === 1);
-        document.getElementById('nextBtn').disabled = (current === total);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
-
+        window.addEventListener('resize', initSnow);
+        initSnow();
+        drawSnow();
+    </script>
 </body>
 </html>
