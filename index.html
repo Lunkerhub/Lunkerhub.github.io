@@ -3,208 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Музыкальные традиции Ирландии</title>
+    <title>SYSTEM FAILURE</title>
     <style>
-        /* Черно-белый градиент на весь экран */
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #434343 100%);
-            color: #ffffff;
-            min-height: 100vh;
+            background-color: black;
+            color: red;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            overflow: hidden; /* Чтобы снег не создавал прокрутку */
-        }
-
-        /* Холст для снега */
-        #snow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Основная карточка */
-        .card {
-            position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Courier New", Courier, monospace;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        /* Стиль для картинок */
-        .image-container {
-            width: 100%;
-            height: 250px;
             overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Картинка заполняет блок без искажений */
-            transition: transform 0.5s ease;
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #ccc;
-            height: 100px; /* Фиксированная высота для текста */
-            margin-bottom: 30px;
-        }
-
-        /* Кнопки внизу */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        button {
-            background: #fff;
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+            font-size: 5rem;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            letter-spacing: 10px;
+            animation: blink 0.8s infinite;
         }
 
-        button:hover:not(:disabled) {
-            background: #00e5ff; /* Легкий акцент при наведении */
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        img {
+            max-width: 80%;
+            height: auto;
+            border: 2px solid red;
+            box-shadow: 0 0 20px red;
         }
 
-        button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            font-size: 0.8rem;
-            color: #888;
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="snow"></canvas>
+    <h1>ТЫ ВЗЛОМАН</h1>
+    
+    <img src="https://media.licdn.com/dms/image/v2/C4D1BAQFuvjsyn1tCjw/company-background_10000/company-background_10000/0/1583767381267/fs0ciety_cover?e=2147483647&v=beta&t=qGvyP6Xc3vO8MQZrDjW0HsKft94WqS4mOh0nRjV6hMs">
 
-    <div class="card">
-        <div class="image-container">
-            <img id="page-img" src="" alt="Музыка Ирландии">
-        </div>
-        <h1 id="title">Загрузка...</h1>
-        <p id="desc"></p>
-
-        <div class="controls">
-            <button id="prevBtn" onclick="move(-1)">Назад</button>
-            <span class="page-info" id="counter">1 / 10</span>
-            <button id="nextBtn" onclick="move(1)">Вперед</button>
-        </div>
-    </div>
-
-    <script>
-        // Данные: 10 страниц с реальными фото
-        const data = [
-            { t: "Кельтская арфа", d: "Древний символ Ирландии. Звук арфы считается голосом самой ирландской души.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOmksPctgFJGMX7UOihuMjkmW6EkwGhx7hBdAtR7BAWrq8raQR0TNQYBi3OA0v9dU_TlZoJLSSIVhtSvIDDGF_GVYt8WC_PE0PfR5gyBhb&s=10" },
-            { t: "Скрипка (Фиддл)", d: "Быстрые ритмы и виртуозные смычковые движения — основа любого ирландского праздника.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGQ68WnshFQk1OkAQrAOVXXpSd6tAKW9SkZUFzySFj6A&s=10" },
-            { t: "Барабан Бойран", d: "Ритмичное сердце фолк-музыки. Изготавливается из козьей кожи и звучит очень глубоко.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwzN-e4gES3b4IjBHErNQgEMSffb13pAYWXagLOe2piAzzc0fT1HLa_ZrPqtCCwMHMpn3OjtIlHZQtZPnRuHfxoRh--CWTMQcFBAwgg81-CQ&s=10" },
-            { t: "Вистл", d: "Маленькая флейта с пронзительным и чистым звуком, напоминающим пение птиц.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDbMCjlK3uH5PR6LpL5ZsL0V4KBszNA4-R08C_XHC_zj5tK_i1URWBzp04AmVsthmuRHirplgY6QCzbA89xnNXKi72b3pwJIITaaj9DZ32A&s=10" },
-            { t: "Волынка Uilleann", d: "Самая сложная волынка в мире. На ней играют сидя, качая воздух локтем.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPAP1yZglF2n46F7749qOeWbT_OZSTyd_42jFyYpUSLEFp6DUGjJtZXsIvxZEtPCX53rrS07oOO8usg_8Q6bNL3rp4bq4_SgfPMBjhfFbe&s=10" },
-            { t: "Пабные сессии", d: "В Ирландии музыка рождается в пабах, где незнакомые люди играют вместе часами.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9WuJlb4WfnTWvuhN5x3lKcgbm-DEUiDNClrBKm4azGw&s=10" },
-            { t: "Ирландские танцы", d: "Степ-данс требует идеальной неподвижности корпуса и невероятной скорости ног.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSRmBQLD1jfzIwRQxxLGegrmC7HvIpVxrVfuzNd8Ddqg&s=10" },
-            { t: "Шон-нос", d: "Традиционное пение без инструментов. Каждое слово наполнено эмоцией и историей.", i: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQkxCg3nspNxZ1WvfJORkH-vROon5Fra2e93qyr8AU9w&s=10" },
-            { t: "Фестивали Флеэд", d: "Ежегодные музыкальные соревнования, собирающие тысячи музыкантов со всего света.", i: "https://images.unsplash.com" },
-            { t: "Современный фолк", d: "Ирландские мотивы сегодня звучат в рок-обработке, покоряя мировые стадионы.", i: "https://images.unsplash.com" }
-        ];
-
-        let current = 0;
-
-        function render() {
-            const item = data[current];
-            document.getElementById('title').innerText = item.t;
-            document.getElementById('desc').innerText = item.d;
-            document.getElementById('page-img').src = item.i;
-            document.getElementById('counter').innerText = `${current + 1} / 10`;
-            
-            document.getElementById('prevBtn').disabled = current === 0;
-            document.getElementById('nextBtn').disabled = current === 9;
-        }
-
-        function move(step) {
-            current += step;
-            render();
-        }
-
-        render();
-
-        // Снег на Canvas
-        const canvas = document.getElementById('snow');
-        const ctx = canvas.getContext('2d');
-        let flakes = [];
-
-        function initSnow() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            flakes = [];
-            for(let i = 0; i < 150; i++) {
-                flakes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 3 + 1,
-                    d: Math.random() * 1
-                });
-            }
-        }
-
-        function drawSnow() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-            ctx.beginPath();
-            for(let f of flakes) {
-                ctx.moveTo(f.x, f.y);
-                ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-                f.y += Math.cos(f.d) + 1 + f.r/2;
-                f.x += Math.sin(f.d) * 2;
-                if(f.y > canvas.height) {
-                    f.y = -10;
-                    f.x = Math.random() * canvas.width;
-                }
-            }
-            ctx.fill();
-            requestAnimationFrame(drawSnow);
-        }
-
-        window.addEventListener('resize', initSnow);
-        initSnow();
-        drawSnow();
-    </script>
 </body>
 </html>
