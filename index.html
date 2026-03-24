@@ -2,13 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Для Марины Андреевны</title>
-    <!-- Библиотека для мощного салюта -->
+    <title>Презентация Ивана Власова</title>
+    <!-- Библиотека для взрыва салюта -->
     <script src="https://cdn.jsdelivr.net"></script>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #1a1a1a;
+            font-family: 'Arial Black', sans-serif;
+            background: #121212;
             color: white;
             display: flex;
             justify-content: center;
@@ -17,68 +17,78 @@
             margin: 0;
             overflow: hidden;
         }
-        .card {
-            background: #2c2c2c;
-            padding: 30px;
-            border-radius: 20px;
-            border: 4px solid #f1c40f;
+        .container {
+            background: #222;
+            width: 380px;
+            padding: 25px;
+            border-radius: 30px;
+            border: 5px solid #f1c40f;
             text-align: center;
-            width: 350px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(241, 196, 15, 0.3);
         }
         .page { display: none; }
-        .active { display: block; animation: zoomIn 0.4s; }
-        
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        .active { display: block; animation: zoom 0.4s ease; }
+        @keyframes zoom { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
-        
+        .image-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #444;
+            background: #000;
+        }
+        .image-container img { width: 100%; height: 100%; object-fit: contain; }
+
         button {
             background: #3498db;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 18px;
             font-weight: bold;
             width: 100%;
-            margin-top: 10px;
+            box-shadow: 0 4px 0 #2980b9;
         }
-        button:hover { background: #2980b9; }
+        button:active { transform: translateY(4px); box-shadow: none; }
 
-        .stars { font-size: 40px; margin: 15px 0; }
-        .star { cursor: pointer; color: #444; }
-        .star.gold { color: #f1c40f; text-shadow: 0 0 10px orange; }
+        .stars { font-size: 45px; margin: 15px 0; }
+        .star { cursor: pointer; color: #444; transition: 0.2s; }
+        .star.gold { color: #f1c40f; text-shadow: 0 0 15px orange; }
         
         .accent { color: #f1c40f; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <!-- СТРАНИЦА 1: BRAWL STARS -->
+<div class="container">
+    <!-- Страница 1: Brawl Stars -->
     <div id="p1" class="page active">
-        <h2 class="accent">BRAWL STARS</h2>
-        <img src="https://encrypted-tbn0.gstatic.com" alt="Brawl Stars">
-        <p>Иван Власов — настоящий профи! Его скилл помогает ему во всем.</p>
+        <h2 class="accent">Brawl Stars PRO</h2>
+        <div class="image-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ1Fpey9pbvQ5fuVdXfgs21FVyvpHH_dM0lCdoR13saw&s=10" alt="Brawl Stars">
+        </div>
+        <p>Иван Власов играет как легенда! С таким скиллом ему нельзя ставить 2.</p>
         <button onclick="go(2)">Далее: Про школу</button>
     </div>
 
-    <!-- СТРАНИЦА 2: УЧЕБА И ЛЮБОВЬ -->
+    <!-- Страница 2: Марина Андреевна -->
     <div id="p2" class="page">
-        <h2 class="accent">ЛЮБИМЫЙ ПРЕДМЕТ</h2>
-        <img src="https://encrypted-tbn0.gstatic.com" alt="Study">
-        <p>Иван очень вас любит, Марина Андреевна! У него хорошие оценки, и он всегда старается.</p>
+        <h2 class="accent">Русский Язык</h2>
+        <div class="image-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR19dw7Xo3OMs6i6PS0xa27L6WAVEtCDzYISihXmSIsg&s" alt="Русский Язык">
+        </div>
+        <p>Марина Андреевна, вы самая добрая! Иван любит ваш предмет и старается.</p>
         <button onclick="go(3)">Далее: Финал</button>
     </div>
 
-    <!-- СТРАНИЦА 3: ОЦЕНКА И САЛЮТ -->
+    <!-- Страница 3: Финал + Салют -->
     <div id="p3" class="page">
-        <h2 class="accent">ВЫ ДОБРАЯ?</h2>
-        <p>Поставьте оценку Ивану:</p>
+        <h2 class="accent">ВЫ СТАВИТЕ 5?</h2>
+        <p>Оцените доброту и нажмите кнопку:</p>
         <div class="stars">
             <span class="star" onclick="rate(1)">★</span>
             <span class="star" onclick="rate(2)">★</span>
@@ -86,7 +96,7 @@
             <span class="star" onclick="rate(4)">★</span>
             <span class="star" onclick="rate(5)">★</span>
         </div>
-        <button id="boom" onclick="fire()">ОТПРАВИТЬ И ВЗОРВАТЬ! 💥</button>
+        <button id="btn" onclick="boom()">ОТПРАВИТЬ И ВЗОРВАТЬ! 💥</button>
     </div>
 </div>
 
@@ -101,25 +111,20 @@
         stars.forEach((s, i) => s.classList.toggle('gold', i < n));
     }
 
-    function fire() {
-        // Мощный взрыв салюта
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#f1c40f', '#3498db', '#ffffff']
-        });
+    function boom() {
+        // Первый мощный взрыв
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
-        // Дополнительные залпы по бокам
-        var end = Date.now() + (2 * 1000);
+        // Продолжительный салют по бокам
+        let end = Date.now() + 3000;
         (function frame() {
             confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
             confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
             if (Date.now() < end) requestAnimationFrame(frame);
         }());
 
-        document.getElementById('boom').innerText = "ИВАНУ 5! СПАСИБО! 🎉";
-        document.getElementById('boom').style.background = "#27ae60";
+        document.getElementById('btn').innerText = "СПАСИБО! ВЫ ЛУЧШАЯ! 🎉";
+        document.getElementById('btn').style.background = "#27ae60";
     }
 </script>
 
