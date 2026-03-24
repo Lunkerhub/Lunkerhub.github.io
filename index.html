@@ -2,50 +2,126 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM FAILURE</title>
+    <title>Для Марины Андреевны</title>
+    <!-- Библиотека для мощного салюта -->
+    <script src="https://cdn.jsdelivr.net"></script>
     <style>
         body {
-            background-color: black;
-            color: red;
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            color: white;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: "Courier New", Courier, monospace;
-            text-align: center;
             overflow: hidden;
         }
-
-        h1 {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            animation: blink 0.8s infinite;
+        .card {
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 20px;
+            border: 4px solid #f1c40f;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .page { display: none; }
+        .active { display: block; animation: zoomIn 0.4s; }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        img {
-            max-width: 80%;
-            height: auto;
-            border: 2px solid red;
-            box-shadow: 0 0 20px red;
+        img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
         }
+        button:hover { background: #2980b9; }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+        .stars { font-size: 40px; margin: 15px 0; }
+        .star { cursor: pointer; color: #444; }
+        .star.gold { color: #f1c40f; text-shadow: 0 0 10px orange; }
+        
+        .accent { color: #f1c40f; }
     </style>
 </head>
 <body>
 
-    <h1>ТЫ ВЗЛОМАН</h1>
-    
-    <img src="https://media.licdn.com/dms/image/v2/C4D1BAQFuvjsyn1tCjw/company-background_10000/company-background_10000/0/1583767381267/fs0ciety_cover?e=2147483647&v=beta&t=qGvyP6Xc3vO8MQZrDjW0HsKft94WqS4mOh0nRjV6hMs">
+<div class="card">
+    <!-- СТРАНИЦА 1: BRAWL STARS -->
+    <div id="p1" class="page active">
+        <h2 class="accent">BRAWL STARS</h2>
+        <img src="https://encrypted-tbn0.gstatic.com" alt="Brawl Stars">
+        <p>Иван Власов — настоящий профи! Его скилл помогает ему во всем.</p>
+        <button onclick="go(2)">Далее: Про школу</button>
+    </div>
+
+    <!-- СТРАНИЦА 2: УЧЕБА И ЛЮБОВЬ -->
+    <div id="p2" class="page">
+        <h2 class="accent">ЛЮБИМЫЙ ПРЕДМЕТ</h2>
+        <img src="https://encrypted-tbn0.gstatic.com" alt="Study">
+        <p>Иван очень вас любит, Марина Андреевна! У него хорошие оценки, и он всегда старается.</p>
+        <button onclick="go(3)">Далее: Финал</button>
+    </div>
+
+    <!-- СТРАНИЦА 3: ОЦЕНКА И САЛЮТ -->
+    <div id="p3" class="page">
+        <h2 class="accent">ВЫ ДОБРАЯ?</h2>
+        <p>Поставьте оценку Ивану:</p>
+        <div class="stars">
+            <span class="star" onclick="rate(1)">★</span>
+            <span class="star" onclick="rate(2)">★</span>
+            <span class="star" onclick="rate(3)">★</span>
+            <span class="star" onclick="rate(4)">★</span>
+            <span class="star" onclick="rate(5)">★</span>
+        </div>
+        <button id="boom" onclick="fire()">ОТПРАВИТЬ И ВЗОРВАТЬ! 💥</button>
+    </div>
+</div>
+
+<script>
+    function go(n) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('p' + n).classList.add('active');
+    }
+
+    function rate(n) {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((s, i) => s.classList.toggle('gold', i < n));
+    }
+
+    function fire() {
+        // Мощный взрыв салюта
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#f1c40f', '#3498db', '#ffffff']
+        });
+
+        // Дополнительные залпы по бокам
+        var end = Date.now() + (2 * 1000);
+        (function frame() {
+            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+
+        document.getElementById('boom').innerText = "ИВАНУ 5! СПАСИБО! 🎉";
+        document.getElementById('boom').style.background = "#27ae60";
+    }
+</script>
 
 </body>
 </html>
