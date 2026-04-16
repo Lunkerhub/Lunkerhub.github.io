@@ -2,131 +2,257 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Презентация Ивана Власова</title>
-    <!-- Библиотека для взрыва салюта -->
-    <script src="https://cdn.jsdelivr.net"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экстремальный Квиз: Сказание о Кише</title>
     <style>
+        :root {
+            --bg-sun: #fffdf2;
+            --glass: rgba(255, 255, 255, 0.85);
+            --accent: #ff9f43;
+            --win: #1dd1a1;
+            --fail: #ff6b6b;
+            --text: #2d3436;
+        }
+
         body {
-            font-family: 'Arial Black', sans-serif;
-            background: #121212;
-            color: white;
+            background: var(--bg-sun);
+            background-image: radial-gradient(circle at 15% 15%, #fffa65 0%, transparent 25%);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
         }
-        .container {
-            background: #222;
-            width: 380px;
-            padding: 25px;
-            border-radius: 30px;
-            border: 5px solid #f1c40f;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(241, 196, 15, 0.3);
-        }
-        .page { display: none; }
-        .active { display: block; animation: zoom 0.4s ease; }
-        @keyframes zoom { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        .image-container {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 2px solid #444;
-            background: #000;
+        .floating-fruit {
+            position: absolute;
+            font-size: 3.5rem;
+            opacity: 0.25;
+            z-index: -1;
+            animation: rise 20s infinite linear;
         }
-        .image-container img { width: 100%; height: 100%; object-fit: contain; }
+
+        @keyframes rise {
+            from { transform: translateY(110vh) rotate(0deg); }
+            to { transform: translateY(-20vh) rotate(360deg); }
+        }
+
+        #app {
+            width: 92%;
+            max-width: 650px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 5px solid #fff;
+            border-radius: 40px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .hidden { display: none; }
+
+        .cool-status {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 15px;
+            background: #fff;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 20px;
+        }
+
+        .drop-zone {
+            height: 90px;
+            border: 4px dashed var(--accent);
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.6);
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .drop-zone.correct { border-style: solid; border-color: var(--win); background: #e3fcef; color: var(--win); transform: scale(1.05); }
+        .drop-zone.wrong { border-color: var(--fail); background: #ffeaa7; animation: shake 0.5s; }
+
+        .options-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+
+        .draggable {
+            background: #fff;
+            padding: 10px 18px;
+            border-radius: 15px;
+            cursor: grab;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-weight: 600;
+            border: 1px solid #f1f1f1;
+        }
 
         button {
-            background: #3498db;
-            color: white;
+            background: var(--accent);
             border: none;
-            padding: 15px;
-            border-radius: 12px;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 800;
             cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            box-shadow: 0 4px 0 #2980b9;
+            transition: 0.3s;
         }
-        button:active { transform: translateY(4px); box-shadow: none; }
 
-        .stars { font-size: 45px; margin: 15px 0; }
-        .star { cursor: pointer; color: #444; transition: 0.2s; }
-        .star.gold { color: #f1c40f; text-shadow: 0 0 15px orange; }
-        
-        .accent { color: #f1c40f; }
+        button:disabled { background: #dfe6e9; color: #b2bec3; cursor: not-allowed; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-15px); }
+            40%, 80% { transform: translateX(15px); }
+        }
+
+        .confetti { position: absolute; pointer-events: none; border-radius: 2px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Страница 1: Brawl Stars -->
-    <div id="p1" class="page active">
-        <h2 class="accent">Brawl Stars PRO</h2>
-        <div class="image-container">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ1Fpey9pbvQ5fuVdXfgs21FVyvpHH_dM0lCdoR13saw&s=10" alt="Brawl Stars">
-        </div>
-        <p>Иван Власов играет как легенда! С таким скиллом ему нельзя ставить 2.</p>
-        <button onclick="go(2)">Далее: Про школу</button>
+<div class="floating-fruit" style="left: 10%; animation-duration: 25s;">🍉</div>
+<div class="floating-fruit" style="left: 50%; animation-duration: 18s;">🍈</div>
+<div class="floating-fruit" style="left: 80%; animation-duration: 22s;">🍉</div>
+
+<div id="app">
+    <div id="start">
+        <h1 style="color: #d35400;">СКАЗАНИЕ О КИШЕ</h1>
+        <p>Для тех, кто знает толщину уса и вкус старого мяса</p>
+        <button onclick="init()">ВОЙТИ В ИГЛУ</button>
     </div>
 
-    <!-- Страница 2: Марина Андреевна -->
-    <div id="p2" class="page">
-        <h2 class="accent">Русский Язык</h2>
-        <div class="image-container">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR19dw7Xo3OMs6i6PS0xa27L6WAVEtCDzYISihXmSIsg&s" alt="Русский Язык">
+    <div id="quiz" class="hidden">
+        <div id="meter" class="cool-status">Крутость: 0%</div>
+        <div id="question" style="font-size: 1.2rem; min-height: 70px; margin-bottom: 15px; font-weight: 600;"></div>
+        
+        <div id="target" class="drop-zone" ondrop="handleDrop(event)" ondragover="allow(event)">
+            ПЕРЕТАЩИ СЮДА
         </div>
-        <p>Марина Андреевна, вы самая добрая! Иван любит ваш предмет и старается.</p>
-        <button onclick="go(3)">Далее: Финал</button>
+
+        <div id="choices" class="options-grid"></div>
+
+        <div style="margin-top: 35px; display: flex; justify-content: space-between;">
+            <button onclick="stepBack()" style="background: #bdc3c7;">НАЗАД</button>
+            <button id="next" onclick="stepNext()" disabled>ВПЕРЕД</button>
+        </div>
     </div>
 
-    <!-- Страница 3: Финал + Салют -->
-    <div id="p3" class="page">
-        <h2 class="accent">ВЫ СТАВИТЕ 5?</h2>
-        <p>Оцените доброту и нажмите кнопку:</p>
-        <div class="stars">
-            <span class="star" onclick="rate(1)">★</span>
-            <span class="star" onclick="rate(2)">★</span>
-            <span class="star" onclick="rate(3)">★</span>
-            <span class="star" onclick="rate(4)">★</span>
-            <span class="star" onclick="rate(5)">★</span>
-        </div>
-        <button id="btn" onclick="boom()">ОТПРАВИТЬ И ВЗОРВАТЬ! 💥</button>
+    <div id="finish" class="hidden">
+        <h1 style="color: var(--win); font-size: 3rem;">ВЫЖИЛ!</h1>
+        <p style="font-size: 1.5rem; font-weight: 800;">Твой статус: ВЕЛИКИЙ ОХОТНИК (100%)</p>
+        <button onclick="location.reload()">ЗАНОВО</button>
     </div>
 </div>
 
 <script>
-    function go(n) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('p' + n).classList.add('active');
+    const db = [
+        { q: "Какова была толщина китового уса, который Киш использовал для шариков?", a: "С палец", ops: ["С волос", "С палец", "С мизинец", "С иголку"] },
+        { q: "Какой длины были куски китового уса, запрятанные в жир?", a: "Два дюйма", ops: ["Два дюйма", "Один дюйм", "Три дюйма", "Половина дюйма"] },
+        { q: "Как Киш обрабатывал концы уса, чтобы они были острее?", a: "Заострял как иглы", ops: ["Обжигал", "Заострял как иглы", "Надламывал", "Не обрабатывал"] },
+        { q: "Какое именно мясо бросили охотники Айкиге в начале рассказа?", a: "Четверть туши старого моржа", ops: ["Кости медведя", "Жир тюленя", "Четверть туши старого моржа", "Гнилую оленину"] },
+        { q: "Сколько шпионов (Бима и Бока) послали следить за Кишем?", a: "Двое", ops: ["Один", "Двое", "Трое", "Весь совет"] },
+        { q: "Через сколько дней шпионы вернулись с докладом о «колдовстве» Киша?", a: "На пятый день", ops: ["На третий день", "На пятый день", "Через неделю", "На второй день"] },
+        { q: "Что именно делал медведь перед смертью, согласно рассказу шпионов?", a: "Катался по снегу и выл", ops: ["Упал в море", "Катался по снегу и выл", "Убежал в лес", "Напал на Киша"] },
+        { q: "Сколько медведей добыл Киш в свой самый успешный поход (когда за ним следили)?", a: "Три (мать и двое детей)", ops: ["Одного огромного", "Двух самцов", "Три (мать и двое детей)", "Ни одного"] },
+        { q: "Что Киш потребовал построить для себя и матери на совете?", a: "Большое иглу", ops: ["Склад мяса", "Большое иглу", "Новую лодку", "Частокол"] },
+        { q: "Из чего была сделана задвижка на входе в новое иглу Киша?", a: "Из кости моржа", ops: ["Из дерева", "Из шкуры", "Из кости моржа", "Из льда"] }
+    ];
+
+    let idx = 0;
+    let results = new Array(db.length).fill(null);
+
+    function init() {
+        document.getElementById('start').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        show();
     }
 
-    function rate(n) {
-        const stars = document.querySelectorAll('.star');
-        stars.forEach((s, i) => s.classList.toggle('gold', i < n));
+    function show() {
+        const item = db[idx];
+        document.getElementById('question').innerText = item.q;
+        
+        const base = (idx + 1) * 10;
+        const randomBonus = Math.floor(Math.random() * 10);
+        document.getElementById('meter').innerText = `Крутость: ${base - 10 + randomBonus}%`;
+
+        const target = document.getElementById('target');
+        const nextBtn = document.getElementById('next');
+
+        if(results[idx]) {
+            target.innerText = results[idx];
+            target.className = 'drop-zone correct';
+            nextBtn.disabled = false;
+        } else {
+            target.innerText = "ПЕРЕТАЩИ СЮДА";
+            target.className = 'drop-zone';
+            nextBtn.disabled = true;
+        }
+
+        const box = document.getElementById('choices');
+        box.innerHTML = '';
+        item.ops.forEach(o => {
+            const el = document.createElement('div');
+            el.innerText = o;
+            el.className = 'draggable';
+            el.draggable = true;
+            el.ondragstart = (e) => e.dataTransfer.setData("val", o);
+            box.appendChild(el);
+        });
     }
+
+    function allow(e) { e.preventDefault(); }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const val = e.dataTransfer.getData("val");
+        const target = document.getElementById('target');
+        
+        if(val === db[idx].a) {
+            target.innerText = val;
+            target.className = 'drop-zone correct';
+            results[idx] = val;
+            document.getElementById('next').disabled = false;
+            boom();
+        } else {
+            target.className = 'drop-zone wrong';
+            setTimeout(() => { if(!results[idx]) target.className = 'drop-zone'; }, 600);
+        }
+    }
+
+    function stepNext() {
+        if(idx < db.length - 1) { idx++; show(); }
+        else {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('finish').classList.remove('hidden');
+        }
+    }
+
+    function stepBack() { if(idx > 0) { idx--; show(); } }
 
     function boom() {
-        // Первый мощный взрыв
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-
-        // Продолжительный салют по бокам
-        let end = Date.now() + 3000;
-        (function frame() {
-            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-            if (Date.now() < end) requestAnimationFrame(frame);
-        }());
-
-        document.getElementById('btn').innerText = "СПАСИБО! ВЫ ЛУЧШАЯ! 🎉";
-        document.getElementById('btn').style.background = "#27ae60";
+        for(let i=0; i<35; i++) {
+            const c = document.createElement('div');
+            c.className = 'confetti';
+            c.style.left = '50%'; c.style.top = '50%';
+            c.style.width = '8px'; c.style.height = '8px';
+            c.style.background = `hsl(${Math.random()*360}, 100%, 50%)`;
+            document.body.appendChild(c);
+            const a = Math.random()*Math.PI*2;
+            const r = 40 + Math.random()*180;
+            c.animate([
+                { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${Math.cos(a)*r}px, ${Math.sin(a)*r}px) rotate(360deg)`, opacity: 0 }
+            ], { duration: 900 }).onfinish = () => c.remove();
+        }
     }
 </script>
-
 </body>
 </html>
