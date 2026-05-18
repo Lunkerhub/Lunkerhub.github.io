@@ -13,13 +13,16 @@
 
     <style>
         :root {
-            --bg-dark: #060913;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --neon-next: #00f0ff;
-            --neon-prev: #ff007f;
+            /* Новая сочная и светлая весенняя палитра */
+            --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #e0f7fa 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 182, 193, 0.4);
+            --text-main: #2c3e50;
+            --text-muted: #5d6d7e;
+            --accent-pink: #ff6b8b;
+            --accent-green: #2ecc71;
+            --btn-next: #ff4757;
+            --btn-prev: #2ed573;
         }
 
         * {
@@ -32,7 +35,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-dark);
+            background: var(--bg-gradient);
             color: var(--text-main);
             overflow: hidden;
             height: 100vh;
@@ -40,9 +43,27 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
-        /* Канвас для радуги */
+        /* Декоративные фоновые цветы */
+        .bg-flower {
+            position: absolute;
+            font-size: 120px;
+            color: rgba(255, 107, 139, 0.08);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatFlowers 8s ease-in-out infinite alternate;
+        }
+        .flower1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .flower2 { bottom: 15%; right: 5%; font-size: 150px; color: rgba(46, 204, 113, 0.08); animation-delay: 2s; }
+
+        @keyframes floatFlowers {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        /* Канвас для радужного шлейфа лепестков */
         #rainbow-canvas {
             position: fixed;
             top: 0;
@@ -64,9 +85,9 @@
 
         .logo {
             font-family: 'Comfortaa', cursive;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
-            background: linear-gradient(to right, var(--neon-next), var(--neon-prev));
+            background: linear-gradient(to right, var(--accent-pink), #ff9f43);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
@@ -74,11 +95,13 @@
 
         .page-indicator {
             font-size: 12px;
-            color: var(--text-muted);
-            background: var(--card-bg);
+            font-weight: 600;
+            color: var(--accent-pink);
+            background: rgba(255, 255, 255, 0.9);
             padding: 6px 14px;
             border-radius: 20px;
             border: 1px solid var(--card-border);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
         /* Контейнер книги */
@@ -92,59 +115,58 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 5;
         }
 
-        /* Анимации страниц */
+        /* Страницы книги */
         .page {
             position: absolute;
             width: calc(100% - 40px);
-            padding: 30px 20px;
+            padding: 35px 25px;
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 2px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(255, 107, 139, 0.1);
             opacity: 0;
-            transform: scale(0.9) translateY(30px);
+            transform: scale(0.9) rotate(-2deg);
             pointer-events: none;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1), transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             text-align: center;
         }
 
         .page.active {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: scale(1) rotate(0deg);
             pointer-events: auto;
         }
 
-        /* Эффект плавного появления текста */
-        .page.active h1 {
-            animation: textFadeIn 0.6s ease forwards 0.1s;
-            opacity: 0;
-        }
-        .page.active p, .page.active .quote-box, .page.active .grid-layout, .page.active .highlight-box {
-            animation: textFadeIn 0.6s ease forwards 0.3s;
-            opacity: 0;
+        /* Анимация контента */
+        .page.active h1 { animation: textFadeIn 0.6s ease forwards 0.1s; opacity: 0; }
+        .page.active p, .page.active .quote-box, .page.active .grid-layout, .page.active .highlight-box { 
+            animation: textFadeIn 0.6s ease forwards 0.3s; opacity: 0; 
         }
 
         @keyframes textFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .page h1 {
             font-family: 'Comfortaa', cursive;
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 15px;
-            background: linear-gradient(to right, #fff, #b4f4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #d63031;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .page p {
             font-size: 15px;
-            color: var(--text-muted);
+            color: var(--text-main);
             line-height: 1.6;
         }
 
@@ -152,16 +174,18 @@
         .quote-box {
             font-style: italic;
             font-size: 16px;
-            border-left: 3px solid var(--neon-prev);
-            padding-left: 15px;
+            border-left: 4px solid var(--accent-pink);
+            background: rgba(255, 107, 139, 0.05);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
             text-align: left;
             margin: 20px auto;
             line-height: 1.6;
         }
 
         .highlight-box {
-            background: rgba(0, 240, 255, 0.03);
-            border: 1px dashed var(--neon-next);
+            background: rgba(46, 204, 113, 0.08);
+            border: 1px dashed var(--accent-green);
             padding: 15px;
             border-radius: 12px;
             margin-top: 15px;
@@ -177,19 +201,20 @@
         }
 
         .card {
-            background: rgba(255,255,255,0.01);
+            background: rgb(255, 255, 255);
             border: 1px solid var(--card-border);
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
         }
 
         .card i {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 8px;
-            color: var(--neon-next);
+            color: var(--accent-pink);
         }
 
-        /* Нижние кнопки */
+        /* Кнопки в самом низу */
         .navigation-bottom {
             width: 100%;
             max-width: 600px;
@@ -202,120 +227,124 @@
         }
 
         .nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
+            background: white;
+            color: white;
             padding: 14px 28px;
-            border-radius: 12px;
+            border-radius: 50px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            border: 2px solid transparent;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
         #prev-btn {
-            border-color: rgba(255, 0, 127, 0.3);
+            background: var(--btn-prev);
         }
         #prev-btn:hover:not(:disabled) {
-            background: var(--neon-prev);
-            color: #fff;
-            box-shadow: 0 0 20px var(--neon-prev);
-            transform: translateX(-3px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+            transform: translateY(-2px);
         }
 
         #next-btn {
-            border-color: rgba(0, 240, 255, 0.3);
-            animation: pulseGlow 2s infinite;
+            background: var(--btn-next);
+            animation: pulseBtn 2s infinite;
         }
         #next-btn:hover:not(:disabled) {
-            background: var(--neon-next);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-next);
-            transform: translateX(3px);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+            transform: translateY(-2px);
             animation: none;
         }
 
         .nav-btn:disabled {
-            opacity: 0.15;
+            background: #bdc3c7;
+            opacity: 0.4;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
-            border-color: var(--card-border);
             animation: none !important;
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0px rgba(0, 240, 255, 0); }
-            50% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.5); border-color: var(--neon-next); }
-            100% { box-shadow: 0 0 0px rgba(0, 240, 255, 0); }
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0px rgba(255, 71, 87, 0); }
+            50% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.6); }
+            100% { box-shadow: 0 0 0px rgba(255, 71, 87, 0); }
         }
 
         @media(max-width: 480px) {
-            .page h1 { font-size: 20px; }
-            .page p { font-size: 14px; }
+            .page h1 { font-size: 18px; }
+            .page p { font-size: 13px; }
             .grid-layout { grid-template-columns: 1fr; }
             .nav-btn { padding: 12px 22px; font-size: 14px; }
+            .bg-flower { font-size: 80px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Фоновые декоративные цветы -->
+    <i class="fa-solid fa-seedling bg-flower flower1"></i>
+    <i class="fa-solid fa-clover bg-flower flower2"></i>
+
+    <!-- Холст для радужного следа из лепестков -->
     <canvas id="rainbow-canvas"></canvas>
 
     <header>
-        <a href="#" class="logo">Язык.Общение</a>
+        <a href="#" class="logo">🌸 РоднаяРечь</a>
         <div class="page-indicator" id="page-num">Страница 1 / 4</div>
     </header>
 
     <main class="book-container">
-        <!-- Страница 1: Введение -->
+        <!-- Страница 1 -->
         <div class="page active">
-            <h1>Язык — мост общения</h1>
-            <p>Человек не может жить в одиночестве. Главное, что связывает нас друг с другом — это речь. Русский язык помогает миллионам людей открыто делиться мыслями, находить друзей и понимать мир вокруг.</p>
+            <h1>Язык — мост общения <i class="fa-solid fa-spa" style="color: var(--accent-pink);"></i></h1>
+            <p>Человек не может жить без общения. Главное, что связывает нас друг с другом — это живая речь. Русский язык помогает миллионам людей открыто делиться мыслями, находить верных друзей и понимать мир вокруг.</p>
         </div>
 
-        <!-- Страница 2: Как именно работает общение -->
+        <!-- Страница 2 -->
         <div class="page">
-            <h1>Универсальный инструмент связи</h1>
-            <p>С помощью слова мы выстраиваем отношения. Язык работает сразу в нескольких направлениях общения:</p>
+            <h1>Универсальный инструмент связи <i class="fa-solid fa-seedling" style="color: var(--accent-green);"></i></h1>
+            <p>С помощью слова мы выстраиваем крепкие отношения. Язык расцветает в процессе нашего ежедневного диалога:</p>
             <div class="grid-layout">
                 <div class="card">
                     <i class="fa-solid fa-heart"></i>
                     <h3>Обмен чувствами</h3>
-                    <p>Помогает выразить поддержку, любовь, радость или сопереживание другому человеку.</p>
+                    <p>Помогает выразить тепло, любовь, радость или искреннее сопереживание.</p>
                 </div>
                 <div class="card">
-                    <i class="fa-solid fa-lightbulb"></i>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <h3>Передача опыта</h3>
-                    <p>Через диалог и тексты мы учимся у старших поколений и делимся своими знаниями.</p>
+                    <p>Через беседы мы учимся мудрости у старших и развиваемся сами.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Страница 3: Глубина русского языка -->
+        <!-- Страница 3 -->
         <div class="page">
-            <h1>Богатство живой речи</h1>
-            <p>Русский язык удивительно точен. В нем есть сотни оттенков для описания одной и той же мысли, что делает общение глубоким и чутким.</p>
+            <h1>Богатство живой речи <i class="fa-solid fa-sun" style="color: #f1c40f;"></i></h1>
+            <p>Русский язык невероятно живописен. В нем есть тысячи красок для выражения одной и той же мысли, что делает наше общение по-настоящему душевным.</p>
             <div class="quote-box">
                 «Русский народ создал русский язык — яркий, как радуга после ливня, меткий, как стрелы, певучий и богатый, задушевный, как песня над колыбелью...»
             </div>
-            <p style="text-align: right; color: var(--neon-prev); font-weight: 600; font-size: 13px; margin-top: -10px;">— Лев Толстой</p>
+            <p style="text-align: right; color: var(--accent-pink); font-weight: 600; font-size: 13px; margin-top: -10px;">— Лев Толстой</p>
         </div>
 
-        <!-- Страница 4: Итог и культура -->
+        <!-- Страница 4 -->
         <div class="page">
-            <h1>Культура красивой речи</h1>
-            <p>Общаться — значит уважать собеседника. Умение слушать и говорить правильно открывает любые двери в современном обществе.</p>
+            <h1>Культура красивой речи <i class="fa-solid fa-graduation-cap" style="color: #9b59b6;"></i></h1>
+            <p>Общаться — значит дарить внимание. Умение слушать и говорить грамотно раскрашивает нашу жизнь новыми яркими возможностями.</p>
             <div class="highlight-box">
-                💡 <b>Помни:</b> Язык живет до тех пор, пока на нем говорят. Береги родную речь, развивай словарный запас и общайся красиво!
+                🌸 <b>Помни:</b> Язык расцветает тогда, когда на нем говорят с любовью. Береги родную речь, наполняй её красивыми словами!
             </div>
         </div>
     </main>
 
+    <!-- Кнопки управления навигацией -->
     <div class="navigation-bottom">
         <button class="nav-btn" id="prev-btn" disabled>
             <i class="fa-solid fa-arrow-left"></i> Назад
@@ -326,7 +355,7 @@
     </div>
 
     <script>
-        // Логика страниц
+        // Код перелистывания страниц
         const pages = document.querySelectorAll('.page');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -349,11 +378,10 @@
             if (currentPageIndex > 0) { currentPageIndex--; updateBook(); }
         });
 
-        // Радуга за курсором
+        // Эффект радужного следа из КРУЖАЩИХСЯ ЛЕПЕСТКОВ
         const canvas = document.getElementById('rainbow-canvas');
         const ctx = canvas.getContext('2d');
-        let points = [];
-        const maxPoints = 25;
+        let particles = [];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -362,33 +390,67 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const addPoint = (x, y) => {
-            points.push({ x, y });
-            if (points.length > maxPoints) points.shift();
+        class LeafParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                // Случайный яркий цвет радуги (HSL)
+                this.hue = Math.random() * 360;
+                this.size = Math.random() * 8 + 6;
+                // Эффект падения и кружения лепестка
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 + 1;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = Math.random() * 0.05 - 0.025;
+                this.opacity = 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.02; // Лепесток постепенно тает
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.fillStyle = `hsla(${this.hue}, 100%, 65%, ${this.opacity})`;
+                
+                // Рисуем красивую форму лепестка цветка
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const createParticles = (x, y) => {
+            // Создаем несколько цветных лепестков при каждом движении
+            for(let i = 0; i < 2; i++) {
+                particles.push(new LeafParticle(x, y));
+            }
         };
 
-        window.addEventListener('mousemove', (e) => addPoint(e.clientX, e.clientY));
+        window.addEventListener('mousemove', (e) => createParticles(e.clientX, e.clientY));
         window.addEventListener('touchmove', (e) => {
             if(e.touches.length > 0) {
-                addPoint(e.touches[0].clientX, e.touches[0].clientY);
+                createParticles(e.touches[0].clientX, e.touches[0].clientY);
             }
         });
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (points.length > 1) {
-                for (let i = 1; i < points.length; i++) {
-                    const p1 = points[i - 1];
-                    const p2 = points[i];
-                    const hue = (i / maxPoints) * 360;
-                    
-                    ctx.strokeStyle = `hsl(${hue}, 100%, 65%)`;
-                    ctx.lineWidth = (i / points.length) * 5;
-                    ctx.lineCap = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Удаляем растаявшие лепестки
+                if (particles[i].opacity <= 0) {
+                    particles.splice(i, 1);
+                    i--;
                 }
             }
             requestAnimationFrame(animate);
