@@ -35,7 +35,6 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow: hidden;
-            /* Идеальное отображение высоты на ПК и смартфонах */
             height: 100vh;
             height: 100dvh; 
             display: flex;
@@ -43,7 +42,7 @@
             justify-content: space-between;
         }
 
-        /* Канвас для радуги на весь экран */
+        /* Канвас для радуги */
         #rainbow-canvas {
             position: fixed;
             top: 0;
@@ -82,7 +81,7 @@
             border: 1px solid var(--card-border);
         }
 
-        /* Главный контейнер страниц */
+        /* Контейнер книги */
         .book-container {
             flex-grow: 1;
             position: relative;
@@ -95,7 +94,7 @@
             justify-content: center;
         }
 
-        /* Анимации и стили страниц */
+        /* Анимации страниц */
         .page {
             position: absolute;
             width: calc(100% - 40px);
@@ -119,12 +118,12 @@
             pointer-events: auto;
         }
 
-        /* Красивое появление контента внутри страниц */
+        /* Эффект плавного появления текста */
         .page.active h1 {
             animation: textFadeIn 0.6s ease forwards 0.1s;
             opacity: 0;
         }
-        .page.active p, .page.active .quote-box, .page.active .grid-layout {
+        .page.active p, .page.active .quote-box, .page.active .grid-layout, .page.active .highlight-box {
             animation: textFadeIn 0.6s ease forwards 0.3s;
             opacity: 0;
         }
@@ -136,7 +135,7 @@
 
         .page h1 {
             font-family: 'Comfortaa', cursive;
-            font-size: 26px;
+            font-size: 24px;
             margin-bottom: 15px;
             background: linear-gradient(to right, #fff, #b4f4ff);
             -webkit-background-clip: text;
@@ -149,15 +148,25 @@
             line-height: 1.6;
         }
 
-        /* Карточки и цитаты */
+        /* Элементы страниц */
         .quote-box {
             font-style: italic;
-            font-size: 17px;
+            font-size: 16px;
             border-left: 3px solid var(--neon-prev);
             padding-left: 15px;
             text-align: left;
             margin: 20px auto;
             line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: rgba(0, 240, 255, 0.03);
+            border: 1px dashed var(--neon-next);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: left;
+            font-size: 14px;
         }
 
         .grid-layout {
@@ -180,7 +189,7 @@
             color: var(--neon-next);
         }
 
-        /* Фиксированная навигация в самом низу */
+        /* Нижние кнопки */
         .navigation-bottom {
             width: 100%;
             max-width: 600px;
@@ -246,7 +255,7 @@
         }
 
         @media(max-width: 480px) {
-            .page h1 { font-size: 22px; }
+            .page h1 { font-size: 20px; }
             .page p { font-size: 14px; }
             .grid-layout { grid-template-columns: 1fr; }
             .nav-btn { padding: 12px 22px; font-size: 14px; }
@@ -259,41 +268,51 @@
 
     <header>
         <a href="#" class="logo">Язык.Общение</a>
-        <div class="page-indicator" id="page-num">Страница 1 / 3</div>
+        <div class="page-indicator" id="page-num">Страница 1 / 4</div>
     </header>
 
     <main class="book-container">
-        <!-- Страница 1 -->
+        <!-- Страница 1: Введение -->
         <div class="page active">
-            <h1>Русский язык — океан мысли</h1>
-            <p>Добро пожаловать. Это интерактивное пространство посвящено великому русскому языку. Нажмите на яркую кнопку «Вперед» внизу экрана, чтобы начать чтение.</p>
+            <h1>Язык — мост общения</h1>
+            <p>Человек не может жить в одиночестве. Главное, что связывает нас друг с другом — это речь. Русский язык помогает миллионам людей открыто делиться мыслями, находить друзей и понимать мир вокруг.</p>
         </div>
 
-        <!-- Страница 2 -->
+        <!-- Страница 2: Как именно работает общение -->
         <div class="page">
-            <h1>Главное средство общения</h1>
-            <p>Язык мгновенно связывает людей друг с другом. С помощью слова мы превращаем невидимые мысли и эмоции в понятные для всех образы.</p>
+            <h1>Универсальный инструмент связи</h1>
+            <p>С помощью слова мы выстраиваем отношения. Язык работает сразу в нескольких направлениях общения:</p>
             <div class="grid-layout">
                 <div class="card">
-                    <i class="fa-solid fa-comments"></i>
-                    <h3>Понимание</h3>
-                    <p>Передает чувства.</p>
+                    <i class="fa-solid fa-heart"></i>
+                    <h3>Обмен чувствами</h3>
+                    <p>Помогает выразить поддержку, любовь, радость или сопереживание другому человеку.</p>
                 </div>
                 <div class="card">
-                    <i class="fa-solid fa-users"></i>
-                    <h3>Единство</h3>
-                    <p>Сближает культуры.</p>
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h3>Передача опыта</h3>
+                    <p>Через диалог и тексты мы учимся у старших поколений и делимся своими знаниями.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Страница 3 -->
+        <!-- Страница 3: Глубина русского языка -->
         <div class="page">
-            <h1>Сила слова</h1>
+            <h1>Богатство живой речи</h1>
+            <p>Русский язык удивительно точен. В нем есть сотни оттенков для описания одной и той же мысли, что делает общение глубоким и чутким.</p>
             <div class="quote-box">
-                «Русский народ создал русский язык — яркий, как радуга после ливня, меткий, как стрелы, певучий и богатый...»
+                «Русский народ создал русский язык — яркий, как радуга после ливня, меткий, как стрелы, певучий и богатый, задушевный, как песня над колыбелью...»
             </div>
-            <p style="text-align: right; color: var(--neon-prev); font-weight: 600; font-size: 14px;">— Лев Толстой</p>
+            <p style="text-align: right; color: var(--neon-prev); font-weight: 600; font-size: 13px; margin-top: -10px;">— Лев Толстой</p>
+        </div>
+
+        <!-- Страница 4: Итог и культура -->
+        <div class="page">
+            <h1>Культура красивой речи</h1>
+            <p>Общаться — значит уважать собеседника. Умение слушать и говорить правильно открывает любые двери в современном обществе.</p>
+            <div class="highlight-box">
+                💡 <b>Помни:</b> Язык живет до тех пор, пока на нем говорят. Береги родную речь, развивай словарный запас и общайся красиво!
+            </div>
         </div>
     </main>
 
@@ -307,7 +326,7 @@
     </div>
 
     <script>
-        // Скрипт перелистывания
+        // Логика страниц
         const pages = document.querySelectorAll('.page');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -330,7 +349,7 @@
             if (currentPageIndex > 0) { currentPageIndex--; updateBook(); }
         });
 
-        // Скрипт адаптивной радуги (ПК + Телефон)
+        // Радуга за курсором
         const canvas = document.getElementById('rainbow-canvas');
         const ctx = canvas.getContext('2d');
         let points = [];
@@ -348,10 +367,7 @@
             if (points.length > maxPoints) points.shift();
         };
 
-        // Движение мыши на ПК
         window.addEventListener('mousemove', (e) => addPoint(e.clientX, e.clientY));
-        
-        // Касания на смартфонах
         window.addEventListener('touchmove', (e) => {
             if(e.touches.length > 0) {
                 addPoint(e.touches[0].clientX, e.touches[0].clientY);
